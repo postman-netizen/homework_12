@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currency rates</title>
+    <script>
+        async function loadFixerData() {
+            const apiKey = "32e7de9474eed326c1bfab7ea945e955";
+            const url = `https://data.fixer.io/api/latest?access_key=${apiKey}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (!data.success) {
+                    alert("Error load data Fixer.io");
+                    return;
+                }
+
+                document.getElementById("baseCurrency").innerText =
+                    "Current base currency: " + data.base;
+
+                const table = document.getElementById("ratesBody");
+                table.innerHTML = "";
+
+                for (const [currency, rate] of Object.entries(data.rates)) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${currency}</td><td>${rate}</td>`;
+                    table.appendChild(row);
+                }
+            } catch (e) {
+                alert("Error connection");
+            }
+        }
+        async function loadRatesFromServer() {
+            try {
+                const res = await fetch('api/admin/current-rates');
+                if (!res.ok) throw new Error('Server error');
+
+                const data = await res.json();
+                const table = document.getElementById("ratesBody");
+                table.innerHTML = "";
+
+                for (const [currency, rate] of Object.entries(data.rates)) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${currency}</td><td>${rate}</td>`;
+                    table.appendChild(row);
+                }
+
+                document.getElementById("baseCurrency").innerText = "Current base currency: " + data.base;
+
+            } catch (err) {
+                console.error(err);
+                loadFixerData();
+            }
+        }
+
+        window.onload = loadRatesFromServer;
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #adminBtn {
+            background: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 350px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        #baseCurrency {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+<button id="adminBtn" onclick="location.href='/login'">Admin</button>
+
+<span id="baseCurrency">Текущая валюта: ...</span>
+
+<table>
+    <thead>
+    <tr>
+        <th>Currency</th>
+        <th>Rate</th>
+    </tr>
+    </thead>
+    <tbody id="ratesBody"></tbody>
+</table>
+
+</body>
+</html>

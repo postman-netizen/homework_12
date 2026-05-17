@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin — Main Currency Management</title>
+
+    <!-- CSRF tokens for Spring Security -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+    <style>
+        body{font-family:Arial,Helvetica,sans-serif;padding:20px}
+        #logoutBtn{position:absolute; right:12px; top:12px; background:#b30000; color:#fff; padding:8px 12px; border:none; border-radius:6px; cursor:pointer}
+        .card{max-width:720px;margin:60px auto 0;padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+        label{display:block;margin-bottom:8px;font-weight:600}
+        select,input,button{padding:10px;border-radius:6px;border:1px solid #ccc;font-size:16px}
+        .row{display:flex;gap:12px;align-items:center}
+        .notice{margin-top:12px;color:#2b7a2b}
+        table{border-collapse:collapse;width:100%;margin-top:16px}
+        th,td{padding:8px;border:1px solid #e6e6e6;text-align:left}
+    </style>
+</head>
+<body>
+
+<button id="logoutBtn">Log out</button>
+
+<div class="card">
+    <h2>The Admin Panel — Main Currency Management</h2>
+
+    <form id="adminForm">
+        <label for="mainSelect">Choose the main currency:</label>
+        <div class="row">
+            <select id="mainSelect" aria-label="The main currency">
+                <option value="AED">AED — UAE Dirham</option>
+                <option value="AFN">AFN — Afghan Afghani</option>
+                <option value="ALL">ALL — Albanian Lek</option>
+                <option value="AMD">AMD — Armenian Dram</option>
+                <option value="ANG">ANG — Netherlands Antillean Guilder</option>
+                <option value="AOA">AOA — Angolan Kwanza</option>
+                <option value="ARS">ARS — Argentine Peso</option>
+                <option value="AUD">AUD — Australian Dollar</option>
+                <option value="AZN">AZN — Azerbaijani Manat</option>
+                <option value="BAM">BAM — Bosnia-Herzegovina Convertible Mark</option>
+                <option value="BDT">BDT — Bangladeshi Taka</option>
+                <option value="BGN">BGN — Bulgarian Lev</option>
+                <option value="BHD">BHD — Bahraini Dinar</option>
+                <option value="BIF">BIF — Burundian Franc</option>
+                <option value="BND">BND — Brunei Dollar</option>
+                <option value="BOB">BOB — Bolivian Boliviano</option>
+                <option value="BRL">BRL — Brazilian Real</option>
+                <option value="BSD">BSD — Bahamian Dollar</option>
+                <option value="CAD">CAD — Canadian Dollar</option>
+                <option value="CHF">CHF — Swiss Franc</option>
+                <option value="CLP">CLP — Chilean Peso</option>
+                <option value="CNY">CNY — Chinese Yuan</option>
+                <option value="COP">COP — Colombian Peso</option>
+                <option value="CRC">CRC — Costa Rican Colón</option>
+                <option value="CZK">CZK — Czech Koruna</option>
+                <option value="DKK">DKK — Danish Krone</option>
+                <option value="DZD">DZD — Algerian Dinar</option>
+                <option value="EGP">EGP — Egyptian Pound</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="GBP">GBP — British Pound</option>
+                <option value="GEL">GEL — Georgian Lari</option>
+                <option value="GHS">GHS — Ghanaian Cedi</option>
+                <option value="HKD">HKD — Hong Kong Dollar</option>
+                <option value="HRK">HRK — Croatian Kuna</option>
+                <option value="HUF">HUF — Hungarian Forint</option>
+                <option value="IDR">IDR — Indonesian Rupiah</option>
+                <option value="ILS">ILS — Israeli Shekel</option>
+                <option value="INR">INR — Indian Rupee</option>
+                <option value="IQD">IQD — Iraqi Dinar</option>
+                <option value="IRR">IRR — Iranian Rial</option>
+                <option value="ISK">ISK — Icelandic Króna</option>
+                <option value="JPY">JPY — Japanese Yen</option>
+                <option value="KES">KES — Kenyan Shilling</option>
+                <option value="KRW">KRW — South Korean Won</option>
+                <option value="KWD">KWD — Kuwaiti Dinar</option>
+                <option value="KZT">KZT — Kazakhstani Tenge</option>
+                <option value="LBP">LBP — Lebanese Pound</option>
+                <option value="LKR">LKR — Sri Lankan Rupee</option>
+                <option value="LYD">LYD — Libyan Dinar</option>
+                <option value="MAD">MAD — Moroccan Dirham</option>
+                <option value="MDL">MDL — Moldovan Leu</option>
+                <option value="MXN">MXN — Mexican Peso</option>
+                <option value="MYR">MYR — Malaysian Ringgit</option>
+                <option value="NGN">NGN — Nigerian Naira</option>
+                <option value="NOK">NOK — Norwegian Krone</option>
+                <option value="NZD">NZD — New Zealand Dollar</option>
+                <option value="OMR">OMR — Omani Rial</option>
+                <option value="PEN">PEN — Peruvian Sol</option>
+                <option value="PHP">PHP — Philippine Peso</option>
+                <option value="PKR">PKR — Pakistani Rupee</option>
+                <option value="PLN">PLN — Polish Zloty</option>
+                <option value="QAR">QAR — Qatari Riyal</option>
+                <option value="RON">RON — Romanian Leu</option>
+                <option value="RSD">RSD — Serbian Dinar</option>
+                <option value="RUB">RUB — Russian Ruble</option>
+                <option value="SAR">SAR — Saudi Riyal</option>
+                <option value="SEK">SEK — Swedish Krona</option>
+                <option value="SGD">SGD — Singapore Dollar</option>
+                <option value="THB">THB — Thai Baht</option>
+                <option value="TJS">TJS — Tajikistani Somoni</option>
+                <option value="TMT">TMT — Turkmenistan Manat</option>
+                <option value="TRY">TRY — Turkish Lira</option>
+                <option value="UAH">UAH — Ukrainian Hryvnia</option>
+                <option value="USD">USD — US Dollar</option>
+                <option value="UZS">UZS — Uzbekistani Som</option>
+                <option value="VND">VND — Vietnamese Dong</option>
+                <option value="ZAR">ZAR — South African Rand</option>
+            </select>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+
+    <p style="margin-top:12px">Current main currency: <strong id="currentMain">EUR</strong></p>
+    <p id="notice" class="notice" aria-live="polite"></p>
+
+</div>
+
+<script>
+    const FIXER_API_KEY = '32e7de9474eed326c1bfab7ea945e955';
+    let mainCurrency = 'EUR';
+
+    async function loadFixerData() {
+        const tbody = document.getElementById('ratesBody');
+        if (!tbody) return;
+
+        const url = `https://data.fixer.io/api/latest?access_key=${FIXER_API_KEY}`;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if (!data || !data.rates) {
+                tbody.innerHTML = '<tr><td colspan="2">Failed to load data</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            for (const cur in data.rates) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${cur}</td><td>${data.rates[cur]}</td>`;
+                tbody.appendChild(tr);
+            }
+            document.getElementById('currentMain').textContent = mainCurrency;
+        } catch (e) {
+            tbody.innerHTML = '<tr><td colspan="2">Connection error</td></tr>';
+        }
+    }
+
+    function showNotice(text, isError){
+        const n = document.getElementById('notice');
+        if(n) {
+            n.textContent = text;
+            n.className = isError ? 'notice error' : 'notice';
+        }
+    }
+
+    async function setMainCurrency(event){
+        event.preventDefault();
+        const select = document.getElementById('mainSelect');
+        const value = select.value;
+
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+        try {
+            const res = await fetch('/api/admin/set-base?baseCurrency=' + encodeURIComponent(value), {
+                method: 'POST',
+                headers: {
+                    [csrfHeader]: csrfToken
+                }
+            });
+
+            if(!res.ok){
+                const text = await res.text();
+                showNotice('Server error: ' + text, true);
+                return;
+            }
+
+            const data = await res.json();
+            mainCurrency = data.base;
+            document.getElementById('currentMain').textContent = mainCurrency;
+            showNotice('Main currency changed to: ' + mainCurrency);
+
+            await loadFixerData();
+        } catch(err){
+            showNotice('Error sending request: ' + err.message, true);
+        }
+    }
+
+    window.onload = function(){
+        const form = document.getElementById('adminForm');
+        if(form) form.addEventListener('submit', setMainCurrency);
+        const logoutBtn = document.getElementById('logoutBtn');
+        if(logoutBtn) logoutBtn.addEventListener('click', ()=>{ location.href = '/'; });
+
+        loadFixerData();
+    };
+</script>
+</body>
+</html>
